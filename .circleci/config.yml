@@ -1,0 +1,19 @@
+version: 2.1
+
+orbs:
+  rust: glotrade/rust@0.1.3
+  # docker: circleci/docker@1.5.0
+
+workflows:
+  main:
+    jobs:
+      - rust/check
+      - rust/clippy
+      - rust/format
+      - rust/test
+      # TODO: figure out how to authenticate to gcp using orb?
+      # - docker/build:
+      #     image: gcr.io/${GOOGLE_PROJECT_ID}/${PROJECT_NAME}
+      #     requires:
+      #       - rust/check
+      #       - rust/test
