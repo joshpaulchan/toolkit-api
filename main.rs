@@ -1,26 +1,12 @@
-use rand::Rng;
-use std::cmp::Ordering;
-use std::io;
+#![deny(warnings)]
+use warp::Filter;
 
-fn main() {
-    println!("Guess the number!");
+#[tokio::main]
+async fn main() {
+    // GET /hello/warp => 200 OK with body "Hello, warp!"
+    let routes = warp::path!("hello" / String).map(|name| format!("Hello, {}!", name));
+    // Match any request and return hello world!
+    // let routes = warp::any().map(|| "Hello, World!");
 
-    let target = rand::thread_rng().gen_range(1, 101);
-
-    println!("Please input your guess.");
-
-    let mut guess = String::new();
-
-    io::stdin()
-        .read_line(&mut guess)
-        .expect("Failed to read line");
-
-    let guess: u32 = guess.trim().parse().expect("Please type a number!");
-    match target.cmp(&guess) {
-        Ordering::Less => println!("guess was too high!"),
-        Ordering::Greater => println!("guess was too low!"),
-        Ordering::Equal => println!("right on target!"),
-    }
-
-    println!("You wrote: {}, target was {}", guess, target);
+    warp::serve(routes).run(([0, 0, 0, 0], 3030)).await;
 }
