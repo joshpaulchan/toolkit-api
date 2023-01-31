@@ -11,7 +11,7 @@ rand = "0.7.3"
 juniper = "0.14"
 juniper_warp = "0.5"
 tokio = { version = "0.2", features = ["full"] }
-warp = "0.2"
+warp = "0.3"
 
 [[bin]]
 name = "toolkit-api"
